@@ -1,7 +1,7 @@
-import config from 'appConfig'
 import debug from 'debug'
 import type core from 'express'
 import mongoose from 'mongoose'
+import config from './appConfig'
 
 const log = debug('Service Launch')
 
@@ -13,7 +13,7 @@ function connectToDatabase (connectionString?: string): void {
   mongoose
     .connect(connectionString)
     .then((conn) => {
-      log('Successfully connected to the database:\n%o', conn.connection)
+      log('Successfully connected to the database:\n%o', conn.connection.config)
     })
     .catch((err) => {
       log(

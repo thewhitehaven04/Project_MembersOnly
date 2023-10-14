@@ -7,10 +7,10 @@
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^39.1.1",
+    "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.1",
     "prettier-config-standard": "^7.0.0",
     "ts-standard": "^12.0.2",
-    "tsc-alias": "^1.8.8",
     "typescript": "^5.2.2"
   },
   "dependencies": {
@@ -26,7 +26,6 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "start": "node public/app.js",
-    "dev": "concurrently \"npx tsc -w\" \"npx tsc-alias -w\" \"nodemon -q public/app.js\"",
-    "debug": "tsc && tsc-alias && nodemon --inspect public/app.js"
+    "dev": "DEBUG=*,-express concurrently \"npx tsc -w\" \"nodemon -e ts,pug -q public/app.js\" "
   }
 }

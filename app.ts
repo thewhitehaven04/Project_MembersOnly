@@ -5,6 +5,7 @@ import * as ServiceLaunch from './serviceLaunch'
 dotenv.config()
 
 ServiceLaunch.connectToDatabase(process.env.CONN_STRING)
+
 const app = express()
 
 ServiceLaunch.setupViewEngine(app)
