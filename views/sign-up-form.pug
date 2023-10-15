@@ -1,0 +1,29 @@
+extends layout
+
+block content 
+
+  if errors
+    ul
+      each error in errors 
+        li=error
+
+  else 
+    form(action="" class="flex flex-col border-2 rounded border-indigo-200 gap-2 p-2" method="post")
+      div(class="rounded flex flex-col gap-1 p-2")
+        label(class="flex flex-row justify-between") Name
+          input(type="text" class="border rounded" name="name")
+
+        label(class="flex flex-row justify-between") Last name 
+          input(type="text" class="border rounded" name="lastName")
+
+        label(class="flex flex-row justify-between") Login
+          input(type="text" class="border rounded" name="username")
+
+        login(class="flex flex-row justify-between") Password
+          input(type="password" class="border rounded" name="password")
+
+        login(class="flex flex-row justify-between") Confirm password 
+          input(type="password" class="border rounded" name="confirm")
+
+      div(class="flex flex-row-reverse")
+        button(type="submit" class="border border-blue rounded p-2") Sign-up 

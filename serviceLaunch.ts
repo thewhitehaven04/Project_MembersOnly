@@ -2,6 +2,8 @@ import debug from 'debug'
 import type core from 'express'
 import mongoose from 'mongoose'
 import config from './appConfig'
+import morgan from 'morgan'
+import { urlencoded } from 'express'
 
 const log = debug('Service Launch')
 
@@ -33,10 +35,15 @@ function setupLogging (app: core.Express): void {
   app.use(morgan('tiny'))
 }
 
+function setupFormHandling (app: core.Express): void {
+  app.use(urlencoded({ extended: false }))
+}
+
 function setup (app: core.Express): core.Express {
   connectToDatabase(process.env.CONN_STRING)
   setupViewEngine(app)
   setupLogging(app)
+  setupFormHandling(app)
   return app
 }
 
