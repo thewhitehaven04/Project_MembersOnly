@@ -25,9 +25,11 @@ const postSignUp = [
           data: { name, lastName, username },
           errors: err.array()
         })
+        return
       }
 
       await createRegularUser(req.body)
+      res.redirect('/')
     }
   )
 ]

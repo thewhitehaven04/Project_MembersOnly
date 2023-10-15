@@ -47,7 +47,7 @@ const userValidator: Schema<DefaultSchemaKeys> = {
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
-        minSymbols: 1
+        minSymbols: 0
       },
       errorMessage:
         'Password must contain at least one upper- and lower-case character; at least one number and at least one letter'
