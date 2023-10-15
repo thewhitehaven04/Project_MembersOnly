@@ -29,4 +29,15 @@ function setupViewEngine (app: core.Express): void {
   app.set('view engine', config.VIEW_ENGINE)
 }
 
-export { connectToDatabase, setupViewEngine }
+function setupLogging (app: core.Express): void {
+  app.use(morgan('tiny'))
+}
+
+function setup (app: core.Express): core.Express {
+  connectToDatabase(process.env.CONN_STRING)
+  setupViewEngine(app)
+  setupLogging(app)
+  return app
+}
+
+export { setup }
