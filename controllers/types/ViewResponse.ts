@@ -5,12 +5,14 @@ interface ViewRenderOptions {
   errors?: ValidationError[]
 }
 
+type ViewResponseCallback = (err: Error, html: string) => void
+
 export default interface ViewResponse<T> extends Response {
   render: ((view: string, options?: ViewRenderOptions & T) => void) &
-  ((
-    view: string,
-    options?: ViewRenderOptions & T,
-    callback?: (err: Error, html: string) => void
-  ) => void) &
-  ((view: string, callback?: (err: Error, html: string) => void) => void)
+    ((
+      view: string,
+      options?: ViewRenderOptions & T,
+      callback?: ViewResponseCallback
+    ) => void) &
+    ((view: string, callback?: ViewResponseCallback) => void)
 }

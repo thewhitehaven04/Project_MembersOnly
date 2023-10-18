@@ -8,12 +8,13 @@
     "@types/node": "^20.8.4",
     "@types/passport": "^1.0.13",
     "@types/passport-local": "^1.0.36",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
     "concurrently": "^8.2.1",
     "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^39.1.1",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.2.0",
     "eslint-plugin-promise": "^6.1.1",
-    "nodemon": "^3.0.1",
     "prettier-config-standard": "^7.0.0",
     "typescript": "^5.2.2"
   },
@@ -22,6 +23,7 @@
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.4",
     "dotenv": "^16.3.1",
+    "eslint-config-prettier": "^9.0.0",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-validator": "^7.0.1",
@@ -29,11 +31,13 @@
     "morgan": "^1.10.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   },
   "scripts": {
     "build": "tsc && tsc-alias",
-    "start": "node public/app.js",
+    "start": "ts-node app.ts",
     "dev": "DEBUG=*,-express concurrently \"npx tsc -w\" \"nodemon -e ts,pug -q public/app.js\" "
   }
 }

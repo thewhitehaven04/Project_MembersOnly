@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { getSignUp, postSignUp } from '../controllers/singUp'
+import { getSignUp, postSignUp } from '../controllers/signUp'
 
 const signUpRouter = Router()
 
-signUpRouter.get('/signup', getSignUp)
-signUpRouter.post('/signup', ...postSignUp)
+signUpRouter.get('/', getSignUp)
+signUpRouter.post('/', ...postSignUp)
 
 export default signUpRouter

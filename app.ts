@@ -2,11 +2,17 @@ import * as dotenv from 'dotenv'
 import express from 'express'
 import * as ServiceLaunch from './serviceLaunch'
 import signUpRouter from './routes/signUp'
+import { loginRouter } from './routes/login'
 
 dotenv.config()
 
-const app = ServiceLaunch.setup(express())
+ServiceLaunch.setup(express())
+  .then((app) => {
+    app.listen(process.env.PORT)
 
-app.listen(process.env.PORT)
-
-app.use('/', signUpRouter)
+    app.use('/signup', signUpRouter)
+    app.use('/login', loginRouter)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
