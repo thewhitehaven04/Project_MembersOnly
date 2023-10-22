@@ -5,6 +5,7 @@ import signUpRouter from './routes/signUp'
 import { loginRouter } from './routes/login'
 import type ViewResponse from './controllers/types/ViewResponse'
 import messageRouter from './routes/message'
+import membershipRouter from './routes/membership'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ ServiceLaunch.setup(express())
     app.use('/signup', signUpRouter)
     app.use('/login', loginRouter)
     app.use('/message', messageRouter)
+    app.use('/membership', membershipRouter)
     app.listen(process.env.PORT)
   })
   .catch((error) => {

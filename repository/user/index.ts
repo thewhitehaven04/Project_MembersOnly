@@ -15,4 +15,8 @@ async function getUserById(id: string): Promise<UserDocument | null> {
   return await User.findById(id).exec()
 }
 
-export { createUser, getUserById, getUserByName }
+async function setUserMembership(id: string): Promise<void> {
+  await User.findByIdAndUpdate(id, { $set: { 'data.isMember': true } })
+}
+
+export { createUser, getUserById, getUserByName, setUserMembership }

@@ -13,7 +13,7 @@ import type ViewResponse from '../types/ViewResponse'
 
 const getMessageForm = [
   redirectToLoginFormIfNotAuthenticated,
-  expressAsyncHandler(async (req, res, next) => {
+  expressAsyncHandler(async (req, res) => {
     res.render('new-message')
   })
 ]
@@ -45,9 +45,9 @@ const postMessage = [
 const getMessages = [
   redirectToLoginFormIfNotAuthenticated,
   expressAsyncHandler(
-    async (req, res: ViewResponse<IMessageListResponse>, next) => {
+    async (req, res: ViewResponse<IMessageListResponse>) => {
       if (req.user != null) {
-        const messages = await MessageService.getFormattedMessages(20)
+        const messages = await MessageService.getFormattedMessages(20, req.user)
         res.render('home', {
           messages,
           user: req.user
