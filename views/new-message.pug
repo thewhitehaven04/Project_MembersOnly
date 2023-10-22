@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+  
+  form(action="" method="post")
+    div(class="flex flex-col gap-3")
+      label(class="flex flex-col") Title 
+        input(name="title" class="border-2 rounded")
+      
+      label(class="flex flex-col") Message text
+        textarea(name="text", cols="60", rows="6" class="border-2 rounded") 
+
+    div(class="flex flex-row justify-end mt-2")
+      button(type="submit" class="border-2 rounded p-1") Submit

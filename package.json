@@ -42,6 +42,6 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "start": "ts-node app.ts",
-    "dev": "DEBUG=*,-express nodemon -e ts,pug -q app.ts"
+    "dev": "DEBUG=*,-express nodemon -e ts -q app.ts"
   }
 }

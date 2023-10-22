@@ -2,12 +2,12 @@ extends layout
 
 block content 
 
-  form(action="" class="flex flex-col border-4 rounded border-indigo-200 gap-2 p-2" method="post")
-    div(class="rounded flex flex-col gap-1 p-2")
-      label(class="flex flex-row justify-between") Username 
+  form(action="" class="flex flex-col border-4 rounded border-indigo-200 gap-2 p-2 mt-2" method="post")
+    div(class="rounded flex flex-col gap-1 p-2 w-max")
+      label(class="flex flex-row justify-between gap-5") Username 
         input(type="text" class="border-2 rounded" name="username")
 
-      label(class="flex flex-row justify-between") Password 
+      label(class="flex flex-row justify-between gap-5") Password 
         input(type="password" class="border-2 rounded" name="password")
 
     div(class="flex flex-row-reverse")

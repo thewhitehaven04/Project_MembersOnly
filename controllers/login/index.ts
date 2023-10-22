@@ -1,6 +1,6 @@
 import expressAsyncHandler from 'express-async-handler'
 import passport from 'passport'
-import config from '../../appConfig'
+import LocalAuthService from '../../services/auth'
 
 const getLoginForm = expressAsyncHandler((req, res) => {
   if (req.user != null) {
@@ -11,7 +11,7 @@ const getLoginForm = expressAsyncHandler((req, res) => {
 })
 
 const postLogin = [
-  passport.authenticate(config.authStrategy, {
+  passport.authenticate(LocalAuthService.strategyName, {
     successRedirect: '/',
     failureRedirect: '/login'
   })

@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+  each message in messages 
+    ul(class="flex flex-column gap-2")
+      li 
+        h1=message.title
+        span=message.text
+  else 
+    span It looks empty in here...
+
+    a(href='/message')
+      button(type='button' class="rounded border-2 border-indigo-300") Add new message

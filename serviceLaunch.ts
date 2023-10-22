@@ -4,11 +4,10 @@ import mongoose from 'mongoose'
 import config from './appConfig'
 import morgan from 'morgan'
 import { urlencoded } from 'express'
-import { Strategy } from 'passport-local'
-import passport, { use } from 'passport'
-import { compareSync } from 'bcrypt'
-import { getUserById, getUserByName } from './repository/user'
+import passport from 'passport'
 import session, { type SessionOptions } from 'express-session'
+import { type IAuthService } from './services/auth/types'
+import LocalAuthService from './services/auth'
 
 const log = debug('Service Launch')
 
@@ -20,11 +19,11 @@ function connectToDatabase(connectionString?: string): void {
   mongoose
     .connect(connectionString)
     .then((conn) => {
-      log('Successfully connected to the database:\n%o', conn.connection)
+      log('Successfully connected to the database')
     })
     .catch((err) => {
       log(
-        'An error took place upon attempting to connect to the database:\n%o',
+        'An error took place upon attempting to connect to the database: %o',
         err
       )
       throw Error('Database connection error')
@@ -47,57 +46,13 @@ function setupFormHandling(app: core.Express): void {
 async function setupAuth(
   app: core.Express,
   sessionConfig: SessionOptions,
-  authStrategy: string
+  authService: IAuthService
 ): Promise<void> {
   app.use(session(sessionConfig))
-
-  const local = new Strategy(
-    { usernameField: 'username', passwordField: 'password' },
-    (username, password, done) => {
-      getUserByName(username)
-        .then((user) => {
-          if (user !== null) {
-            const passwordsMatch = compareSync(
-              password,
-              user.credentials.password
-            )
-
-            if (passwordsMatch) {
-              const obj = user.toObject()
-              done(null, { _id: obj._id.toString(), ...obj.data })
-            } else done(null, false, { message: 'Wrong password!' })
-            return
-          }
-          done(null, false, {
-            message: `There is no user with name "${username}"`
-          })
-        })
-        .catch((err) => {
-          log(err)
-        })
-    }
-  )
-
-  passport.use(authStrategy, local)
-
-  passport.serializeUser((user, done) => {
-    done(null, user._id)
-  })
-
-  passport.deserializeUser(function (id: string, done) {
-    getUserById(id)
-      .then((res) => {
-        if (res !== null) {
-          const obj = res.toObject()
-          done(null, { ...obj.data, _id: obj._id.toString() })
-          return
-        }
-        done('No such user', false)
-      })
-      .catch((err) => {
-        log(err)
-      })
-  })
+  
+  passport.use(authService.strategyName, authService.strategy)
+  passport.serializeUser(authService.serialize)
+  passport.deserializeUser(authService.deserialize)
 
   app.use(passport.session())
   app.use(passport.initialize())
@@ -108,7 +63,7 @@ async function setup(app: core.Express): Promise<core.Express> {
   setupViewEngine(app)
   setupLogging(app)
   setupFormHandling(app)
-  await setupAuth(app, config.session, config.authStrategy)
+  await setupAuth(app, config.session, LocalAuthService)
   return app
 }
 
