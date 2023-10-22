@@ -5,10 +5,10 @@ import config from './appConfig'
 import morgan from 'morgan'
 import { urlencoded } from 'express'
 import { Strategy } from 'passport-local'
-import passport from 'passport'
+import passport, { use } from 'passport'
 import { compareSync } from 'bcrypt'
-import User from './models/user'
 import { getUserById, getUserByName } from './repository/user'
+import session, { type SessionOptions } from 'express-session'
 
 const log = debug('Service Launch')
 
@@ -20,7 +20,7 @@ function connectToDatabase(connectionString?: string): void {
   mongoose
     .connect(connectionString)
     .then((conn) => {
-      log('Successfully connected to the database:\n%o', conn.connection.config)
+      log('Successfully connected to the database:\n%o', conn.connection)
     })
     .catch((err) => {
       log(
@@ -44,40 +44,58 @@ function setupFormHandling(app: core.Express): void {
   app.use(urlencoded({ extended: false }))
 }
 
-async function setupAuth(app: core.Express): Promise<void> {
+async function setupAuth(
+  app: core.Express,
+  sessionConfig: SessionOptions,
+  authStrategy: string
+): Promise<void> {
+  app.use(session(sessionConfig))
+
   const local = new Strategy(
     { usernameField: 'username', passwordField: 'password' },
-    function (username, password, done) {
+    (username, password, done) => {
       getUserByName(username)
         .then((user) => {
           if (user !== null) {
-            const userPassword = user.credentials.password
-            const passwordsMatch = compareSync(password, userPassword)
+            const passwordsMatch = compareSync(
+              password,
+              user.credentials.password
+            )
 
-            if (passwordsMatch) done(null, { username, password })
-            else done(null, false, { message: 'Incorrect credentials' })
+            if (passwordsMatch) {
+              const obj = user.toObject()
+              done(null, { _id: obj._id.toString(), ...obj.data })
+            } else done(null, false, { message: 'Wrong password!' })
+            return
           }
+          done(null, false, {
+            message: `There is no user with name "${username}"`
+          })
         })
         .catch((err) => {
           log(err)
         })
-
-      done(null, false, { message: 'Incorrect credentials' })
     }
   )
-  passport.use(local)
+
+  passport.use(authStrategy, local)
 
   passport.serializeUser((user, done) => {
-    done(null, user)
+    done(null, user._id)
   })
 
   passport.deserializeUser(function (id: string, done) {
     getUserById(id)
-      .then((user) => {
-        done(null, user)
+      .then((res) => {
+        if (res !== null) {
+          const obj = res.toObject()
+          done(null, { ...obj.data, _id: obj._id.toString() })
+          return
+        }
+        done('No such user', false)
       })
       .catch((err) => {
-        done(err)
+        log(err)
       })
   })
 
@@ -90,7 +108,7 @@ async function setup(app: core.Express): Promise<core.Express> {
   setupViewEngine(app)
   setupLogging(app)
   setupFormHandling(app)
-  await setupAuth(app)
+  await setupAuth(app, config.session, config.authStrategy)
   return app
 }
 

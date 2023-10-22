@@ -6,8 +6,11 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
 
   script(src="https://cdn.tailwindcss.com") 
+  
+  header(class="flex-row") 
+    if user  
+      span=user.name
+      span=user.lastName
 
-  h1 Hello world
-
-  main
+  main(class="mx-4 w-72 min-w-[50%]")
     block content

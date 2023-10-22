@@ -1,15 +1,20 @@
-import expressAsyncHandler from "express-async-handler";
-import AuthService from "../../services/auth";
+import expressAsyncHandler from 'express-async-handler'
+import passport from 'passport'
+import config from '../../appConfig'
 
-const getLoginForm = expressAsyncHandler((req, res, next) => {
-  res.render("login-form");
-});
+const getLoginForm = expressAsyncHandler((req, res) => {
+  if (req.user != null) {
+    res.redirect('/')
+    return
+  }
+  res.render('login-form', { user: req.user })
+})
 
-const postLogin = expressAsyncHandler(
-  new AuthService().getMiddleware({
-    successRedirect: "/",
-    failureRedirect: "/",
-  }),
-);
+const postLogin = [
+  passport.authenticate(config.authStrategy, {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  })
+]
 
-export { getLoginForm, postLogin };
+export { getLoginForm, postLogin }

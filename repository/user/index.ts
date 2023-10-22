@@ -1,4 +1,4 @@
-import User from '../../models/user/index'
+import User from '../../models/user/'
 import { type IUser } from '../../models/user/types'
 import { type UserDocument } from './types'
 

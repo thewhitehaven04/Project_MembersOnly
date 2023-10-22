@@ -2,13 +2,13 @@ extends layout
 
 block content 
 
-  form(action="" class="flex flex-col border-2 rounded border-indigo-200 gap-2 p-2" method="post")
+  form(action="" class="flex flex-col border-4 rounded border-indigo-200 gap-2 p-2" method="post")
     div(class="rounded flex flex-col gap-1 p-2")
       label(class="flex flex-row justify-between") Username 
-        input(type="text" class="border rounded" name="username")
+        input(type="text" class="border-2 rounded" name="username")
 
       label(class="flex flex-row justify-between") Password 
-        input(type="text" class="border rounded" name="password")
+        input(type="password" class="border-2 rounded" name="password")
 
     div(class="flex flex-row-reverse")
       button(type="submit" class="border border-blue rounded p-2") Login 

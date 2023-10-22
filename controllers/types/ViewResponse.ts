@@ -1,7 +1,8 @@
 import { type Response } from 'express'
 import { type ValidationError } from 'express-validator'
 
-interface ViewRenderOptions {
+export interface ViewRenderOptions {
+  user?: Express.User | null,
   errors?: ValidationError[]
 }
 

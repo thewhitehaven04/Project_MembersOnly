@@ -3,7 +3,7 @@ interface ICredentials {
   password: string
 }
 
-interface IUserData {
+export interface IUserData {
   name: string
   lastName: string
   isMember: boolean

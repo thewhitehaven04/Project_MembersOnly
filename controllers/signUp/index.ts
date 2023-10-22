@@ -23,13 +23,14 @@ const postSignUp = [
         const { name, lastName, username } = req.body
         res.render('sign-up-form', {
           data: { name, lastName, username },
+          user: req.user ?? null,
           errors: err.array()
         })
         return
       }
 
       await userService.createRegularUser(req.body)
-      res.redirect('/')
+      res.redirect('/login')
     }
   )
 ]
