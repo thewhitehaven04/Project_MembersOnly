@@ -5,7 +5,7 @@ import config from './appConfig'
 import morgan from 'morgan'
 import { urlencoded } from 'express'
 import passport from 'passport'
-import session, { type SessionOptions } from 'express-session'
+import session from 'express-session'
 import { type IAuthService } from './services/auth/types'
 import LocalAuthService from './services/auth'
 
@@ -45,11 +45,10 @@ function setupFormHandling(app: core.Express): void {
 
 async function setupAuth(
   app: core.Express,
-  sessionConfig: SessionOptions,
   authService: IAuthService
 ): Promise<void> {
-  app.use(session(sessionConfig))
-  
+  app.use(session({ ...config.session, secret: process.env.SECRET ?? '' }))
+
   passport.use(authService.strategyName, authService.strategy)
   passport.serializeUser(authService.serialize)
   passport.deserializeUser(authService.deserialize)
@@ -63,7 +62,7 @@ async function setup(app: core.Express): Promise<core.Express> {
   setupViewEngine(app)
   setupLogging(app)
   setupFormHandling(app)
-  await setupAuth(app, config.session, LocalAuthService)
+  await setupAuth(app, LocalAuthService)
   return app
 }
 

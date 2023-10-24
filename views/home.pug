@@ -1,9 +1,9 @@
 extends layout 
 
 block content 
-  ul(class="list-none flex flex-col gap-2 w-full")
+  ul(class="flex flex-col gap-3 mt-2") 
   each message in messages 
-    li 
+    li(class="list-none") 
       div(class="flex flex-col") 
         
         h1(class="text-xl text-gray-700")=message.title
@@ -15,6 +15,7 @@ block content
 
   else 
     span It looks empty in here...
-  
-  a(href='/message')
-    button(type='button' class="rounded border-2 p-1") Add new message
+
+  div(class="relative mt-2") 
+    a(href='/message' class="absolute right-0")
+      button(type='button' class="rounded border-2 p-2") Add message

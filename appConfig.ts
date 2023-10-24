@@ -8,7 +8,6 @@ const config = {
     expires: 86400, 
     saveUnitialised: true,
     resave: false,
-    secret: 'test_member'
   }
 }
 

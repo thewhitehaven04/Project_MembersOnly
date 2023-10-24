@@ -27,6 +27,7 @@ const postMessage = [
       res: ViewResponse<INewMessageDataView>
     ) => {
       const errors = validationResult(req)
+
       if (req.user != null) {
         if (errors.isEmpty()) {
           await MessageService.saveMessage(req.body, req.user)
@@ -44,17 +45,15 @@ const postMessage = [
 
 const getMessages = [
   redirectToLoginFormIfNotAuthenticated,
-  expressAsyncHandler(
-    async (req, res: ViewResponse<IMessageListResponse>) => {
-      if (req.user != null) {
-        const messages = await MessageService.getFormattedMessages(20, req.user)
-        res.render('home', {
-          messages,
-          user: req.user
-        })
-      }
+  expressAsyncHandler(async (req, res: ViewResponse<IMessageListResponse>) => {
+    if (req.user != null) {
+      const messages = await MessageService.getFormattedMessages(20, req.user)
+      res.render('home', {
+        messages,
+        user: req.user
+      })
     }
-  )
+  })
 ]
 
 export { getMessageForm, postMessage, getMessages }

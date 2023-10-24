@@ -8,22 +8,22 @@ block content
         li=error
 
   else 
-    form(action="" class="flex flex-col border-2 rounded border-indigo-200 gap-2 p-2" method="post")
+    form(action="" class="flex flex-col border-2 rounded border-indigo-200 mt-2 gap-2 p-2" method="post")
       div(class="rounded flex flex-col gap-1 p-2")
         label(class="flex flex-row justify-between") Name
-          input(type="text" class="border rounded" name="name")
+          input(type="text" class="border-2 rounded px-1" name="name")
 
         label(class="flex flex-row justify-between") Last name 
-          input(type="text" class="border rounded" name="lastName")
+          input(type="text" class="border-2 rounded px-1" name="lastName")
 
         label(class="flex flex-row justify-between") Login
-          input(type="text" class="border rounded" name="username")
+          input(type="text" class="border-2 rounded px-1" name="username")
 
         login(class="flex flex-row justify-between") Password
-          input(type="password" class="border rounded" name="password")
+          input(type="password" class="border-2 rounded px-1" name="password")
 
-        login(class="flex flex-row justify-between") Confirm password 
-          input(type="password" class="border rounded" name="confirm")
+        login(class="flex flex-row justify-between px-px") Confirm password 
+          input(type="password" class="border-2 rounded px-1" name="confirm")
 
       div(class="flex flex-row-reverse")
-        button(type="submit" class="border border-blue rounded p-2") Sign-up 
+        button(type="submit" class="border-2 border-blue rounded p-2") Sign-up 

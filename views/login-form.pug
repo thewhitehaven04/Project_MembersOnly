@@ -2,7 +2,7 @@ extends layout
 
 block content 
 
-  form(action="" class="flex flex-col border-4 rounded border-indigo-200 gap-2 p-2 mt-2" method="post")
+  form(action="" class="relative flex flex-col border-4 rounded border-indigo-200 gap-2 p-2 mt-2" method="post")
     div(class="rounded flex flex-col gap-1 p-2 w-max")
       label(class="flex flex-row justify-between gap-5") Username 
         input(type="text" class="border-2 rounded" name="username")
@@ -10,5 +10,4 @@ block content
       label(class="flex flex-row justify-between gap-5") Password 
         input(type="password" class="border-2 rounded" name="password")
 
-    div(class="flex flex-row-reverse")
-      button(type="submit" class="border rounded p-2") Login 
+    button(type="submit" class="border-2 rounded border-indigo-200 absolute bottom-2 right-2 rounded p-2") Login 

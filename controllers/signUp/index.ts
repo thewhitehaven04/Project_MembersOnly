@@ -30,7 +30,7 @@ const postSignUp = [
       }
 
       await userService.createRegularUser(req.body)
-      res.redirect('/login')
+      res.redirect('/')
     }
   )
 ]

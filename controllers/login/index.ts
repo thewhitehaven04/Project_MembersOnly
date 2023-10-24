@@ -10,11 +10,19 @@ const getLoginForm = expressAsyncHandler((req, res) => {
   res.render('login-form', { user: req.user })
 })
 
-const postLogin = [
-  passport.authenticate(LocalAuthService.strategyName, {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  })
-]
+const postLogin = passport.authenticate(LocalAuthService.strategyName, {
+  successRedirect: '/',
+  failureRedirect: '/session/login'
+})
 
-export { getLoginForm, postLogin }
+const postLogout = expressAsyncHandler((req, res, next) => {
+  req.logout((err: any) => {
+    if (err !== null) {
+      next(err)
+      return
+    }
+    res.redirect('/')
+  })
+})
+
+export { getLoginForm, postLogin, postLogout }
