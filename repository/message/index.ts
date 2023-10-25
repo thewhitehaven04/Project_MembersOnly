@@ -4,8 +4,7 @@ import { type IUser } from '../../models/user/types'
 import { type PopulatedMessageDocument } from './types'
 
 async function storeMessage(message: IMessage): Promise<void> {
-  const msg = new Message(message)
-  await msg.save()
+  await Message.create(message)
 }
 
 async function getMessages(count: number): Promise<PopulatedMessageDocument[]> {
@@ -15,4 +14,8 @@ async function getMessages(count: number): Promise<PopulatedMessageDocument[]> {
     .exec()
 }
 
-export { storeMessage, getMessages }
+async function deleteMessage(id: string): Promise<void> {
+  await Message.findByIdAndDelete(id).exec()
+}
+
+export { storeMessage, getMessages, deleteMessage }

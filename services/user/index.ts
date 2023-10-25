@@ -1,10 +1,7 @@
 import { type IMembershipRequest } from '../../controllers/membership/types'
 import { type ISignUpRequest } from '../../controllers/signUp/types'
 import { checkIfInMembershipKeys } from '../../repository/membership'
-import {
-  createUser,
-  setUserMembership,
-} from '../../repository/user'
+import { createUser, setUserMembership } from '../../repository/user'
 import { hashPassword } from '../../utils/passwordEncrypt'
 
 async function createRegularUser(
@@ -39,4 +36,17 @@ async function setUserMembershipIfValidKey(
   return false
 }
 
-export { createRegularUser, setUserMembershipIfValidKey }
+async function isUserMember(user: Express.User): Promise<boolean> {
+  return user.isMember
+}
+
+async function isUserAdmin(user: Express.User): Promise<boolean> {
+  return user.isAdmin
+}
+
+export {
+  createRegularUser,
+  setUserMembershipIfValidKey,
+  isUserAdmin,
+  isUserMember
+}

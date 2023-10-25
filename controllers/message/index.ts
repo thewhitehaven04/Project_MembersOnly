@@ -6,7 +6,7 @@ import * as MessageService from './../../services/message'
 import {
   type INewMessageDataView,
   type IMessageListResponse,
-  type INewMessageRequest
+  type INewMessageRequest,
 } from './types'
 import { type Request } from 'express'
 import type ViewResponse from '../types/ViewResponse'
@@ -56,4 +56,19 @@ const getMessages = [
   })
 ]
 
-export { getMessageForm, postMessage, getMessages }
+const deleteMessage = [
+  redirectToLoginFormIfNotAuthenticated,
+  expressAsyncHandler(
+    async (
+      req: Request<{id: string}, any, any, any>,
+      res: ViewResponse<IMessageListResponse>
+    ) => {
+      if (req.user != null) {
+        await MessageService.deleteMessage(req.params.id, req.user)
+        res.redirect('/')
+      }
+    }
+  )
+]
+
+export { getMessageForm, postMessage, getMessages, deleteMessage }
