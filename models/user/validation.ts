@@ -59,6 +59,11 @@ const userValidator: Schema<DefaultSchemaKeys> = {
       options: (value: string, { req }) => value === req.body.password
     },
     errorMessage: 'Password and confirmation do not match'
+  },
+  adminRights: {
+    isIn: {
+      options: ['on', 'off']
+    }
   }
 }
 

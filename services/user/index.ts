@@ -7,7 +7,7 @@ import { hashPassword } from '../../utils/passwordEncrypt'
 async function createRegularUser(
   userCreateRequest: ISignUpRequest
 ): Promise<void> {
-  const { name, lastName, username, password } = userCreateRequest
+  const { name, lastName, username, password, adminRights } = userCreateRequest
   const user = {
     credentials: {
       username,
@@ -17,7 +17,7 @@ async function createRegularUser(
       name,
       lastName,
       isMember: false,
-      isAdmin: false
+      isAdmin: adminRights === 'on'
     }
   }
 

@@ -4,6 +4,7 @@ export interface ISignUpRequest {
   username: string
   password: string
   confirm: string
+  adminRights: string 
 }
 
 export interface ISignUpUpdateView {

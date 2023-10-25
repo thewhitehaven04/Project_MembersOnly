@@ -3,8 +3,7 @@ import { type IUser } from '../../models/user/types'
 import { type UserDocument } from './types'
 
 async function createUser(user: IUser): Promise<void> {
-  const newUser = new User(user)
-  await newUser.save()
+  await User.create(user)
 }
 
 async function getUserByName(username: string): Promise<UserDocument | null> {

@@ -32,25 +32,24 @@ async function getFormattedMessages(
 ): Promise<IMessageView[]> {
   const messages = await MessageRepository.getMessages(count)
 
-  const isMember = await UserService.isUserMember(user)
+  const canSeeMessages =
+    (await UserService.isUserMember(user)) ||
+    (await UserService.isUserAdmin(user))
 
   return messages.map((msg) => {
     return {
       id: msg.id,
       title: msg.title,
       text: msg.text,
-      author: isMember
+      author: canSeeMessages
         ? msg.author.data.name + ' ' + msg.author.data.lastName
         : 'Anonymous',
-      timestamp: isMember ? formatRelative(msg.timestamp, new Date()) : ''
+      timestamp: canSeeMessages ? formatRelative(msg.timestamp, new Date()) : ''
     }
   })
 }
 
-async function deleteMessage(
-  id: string,
-  user: Express.User
-): Promise<void> {
+async function deleteMessage(id: string, user: Express.User): Promise<void> {
   const isAdmin = await UserService.isUserAdmin(user)
   if (isAdmin) {
     await MessageRepository.deleteMessage(id)
