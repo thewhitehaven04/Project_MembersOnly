@@ -22,8 +22,9 @@ async function saveMessage(
       author: author._id
     }
     await MessageRepository.storeMessage(messageToSave)
+  } else {
+    throw new Error('Author has not been found in the database')
   }
-  throw new Error('Author has not been found in the database')
 }
 
 async function getFormattedMessages(

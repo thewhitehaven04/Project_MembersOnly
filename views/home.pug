@@ -4,16 +4,16 @@ block content
   ul(class="flex flex-col gap-4 mt-2") 
     each message in messages 
       li(class="list-none") 
-        div(class="flex flex-row justify-between")
+        div(class="bg-white p-3 rounded shadow-md")
           div(class="flex flex-col") 
             
-            h1(class="text-xl text-gray-700")=message.title
-            p(class="text-gray-700")=message.text
+            h1(class="text-xl text-gray-800")=message.title
+            p(class="text-gray-800")=message.text
             
             div(class="flex flex-row justify-end")
               span(class="text-sm text-gray-500") #{message.timestamp} from #{message.author}
         
-          form(action=message.id + "/delete" method="post")
+          form(action=message.id + "/delete" method="post" class="flex flex-row justify-end mt-2")
             button(type="submit" class="rounded border-2 p-2") Delete
 
     else 
