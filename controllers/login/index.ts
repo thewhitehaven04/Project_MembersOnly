@@ -17,7 +17,7 @@ const postLogin = passport.authenticate(LocalAuthService.strategyName, {
 
 const postLogout = expressAsyncHandler((req, res, next) => {
   req.logout((err: any) => {
-    if (err !== null) {
+    if (err != null) {
       next(err)
       return
     }
